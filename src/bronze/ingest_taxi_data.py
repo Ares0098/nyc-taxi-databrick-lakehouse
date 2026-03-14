@@ -17,6 +17,7 @@ def run_pipeline():
 
     spark = SparkSession.builder.getOrCreate()
 
+    # Read dataset directly from URL
     df = spark.read.parquet(RAW_DATA_PATH)
 
     df = (
