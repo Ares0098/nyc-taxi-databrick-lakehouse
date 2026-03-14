@@ -9,15 +9,13 @@ from src.config.constants import (
 
 def download_dataset(dbutils):
 
-    local_tmp = "/tmp/yellow_tripdata_2023-01.parquet"
-
-    print("Downloading dataset...")
-    urllib.request.urlretrieve(DATA_URL, local_tmp)
-
     print("Creating DBFS directory...")
     dbutils.fs.mkdirs(DBFS_DATA_DIR)
 
-    print("Copying dataset to DBFS...")
-    dbutils.fs.cp(f"file:{local_tmp}", DBFS_DATA_PATH)
+    print("Downloading dataset directly to DBFS...")
+
+    local_dbfs_path = "/dbfs/FileStore/datasets/nyc_taxi/yellow_tripdata_2023-01.parquet"
+
+    urllib.request.urlretrieve(DATA_URL, local_dbfs_path)
 
     print("Dataset ready at:", DBFS_DATA_PATH)
