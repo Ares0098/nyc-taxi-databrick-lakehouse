@@ -1,17 +1,21 @@
 # Databricks notebook source
 
 # COMMAND ----------
-# Import bronze ingestion pipeline
+# download dataset
 
-from src.bronze.ingest_taxi_data import run_pipeline
+from src.bronze.download_dataset import download_dataset
+
+download_dataset()
 
 # COMMAND ----------
-# Execute bronze ingestion
+# run bronze ingestion
+
+from src.bronze.ingest_taxi_data import run_pipeline
 
 run_pipeline()
 
 # COMMAND ----------
-# Validate table
+# validate result
 
 spark.sql("""
 SELECT *
