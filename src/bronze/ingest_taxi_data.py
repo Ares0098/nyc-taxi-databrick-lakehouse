@@ -3,7 +3,7 @@ from pyspark.sql.functions import (
     current_timestamp,
     year,
     month,
-    input_file_name
+    col
 )
 
 from src.config.constants import (
@@ -23,7 +23,7 @@ def run_pipeline():
         df.withColumn("ingestion_timestamp", current_timestamp())
         .withColumn("pickup_year", year("tpep_pickup_datetime"))
         .withColumn("pickup_month", month("tpep_pickup_datetime"))
-        .withColumn("source_file", input_file_name())
+        .withColumn("source_file", col("_metadata.file_path"))
     )
 
     (
