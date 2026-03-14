@@ -8,7 +8,7 @@ from pyspark.sql.functions import (
 
 from src.config.constants import (
     BRONZE_TABLE,
-    RAW_DATA_PATH,
+    DBFS_DATA_PATH,
     BRONZE_PARTITIONS
 )
 
@@ -17,8 +17,7 @@ def run_pipeline():
 
     spark = SparkSession.builder.getOrCreate()
 
-    # Read dataset directly from URL
-    df = spark.read.parquet(RAW_DATA_PATH)
+    df = spark.read.parquet(DBFS_DATA_PATH)
 
     df = (
         df.withColumn("ingestion_timestamp", current_timestamp())
