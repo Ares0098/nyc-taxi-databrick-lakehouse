@@ -3,7 +3,7 @@
 # COMMAND ----------
 from src.bronze.download_dataset import download_dataset
 
-download_dataset(dbutils)
+download_dataset()
 
 # COMMAND ----------
 from src.bronze.ingest_taxi_data import run_pipeline

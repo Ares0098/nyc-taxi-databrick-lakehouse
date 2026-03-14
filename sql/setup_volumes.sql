@@ -1,0 +1,1 @@
+CREATE VOLUME IF NOT EXISTS main.bronze.raw_data;
