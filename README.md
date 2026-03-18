@@ -8,9 +8,9 @@ The objective is to simulate a realistic **end-to-end data engineering workflow*
 
 The pipeline follows the **Medallion Architecture**, organizing data into progressive layers:
 
-- **Bronze** → raw ingestion
-- **Silver** → cleaned and validated data
-- **Gold** → business-level aggregations
+- **Bronze** → raw ingestion  
+- **Silver** → cleaned and validated data  
+- **Gold** → business-level aggregations  
 
 ---
 
@@ -20,11 +20,11 @@ This project uses the **NYC Taxi Trip Record Data**, a large-scale public datase
 
 Each record includes:
 
-- pickup and dropoff timestamps
-- passenger count
-- trip distance
-- fare and tip amounts
-- location identifiers
+- pickup and dropoff timestamps  
+- passenger count  
+- trip distance  
+- fare and tip amounts  
+- location identifiers  
 
 This dataset is commonly used to benchmark distributed data processing and analytics workloads.
 
@@ -40,11 +40,15 @@ The Bronze layer stores **raw ingested data** with minimal transformation.
 
 Responsibilities:
 
-- ingest raw Parquet data from external source
-- preserve original schema
-- append ingestion metadata (e.g. ingestion timestamp, source file)
+- ingest raw Parquet data from external source  
+- preserve original schema  
+- append ingestion metadata (e.g. ingestion timestamp, source file)  
 
-Example table: main.bronze.bronze_taxi_trips
+Data is stored as **Delta tables backed by external storage**, following lakehouse principles by decoupling compute and storage.
+
+Example table: `main.bronze.bronze_taxi_trips`
+
+In semi-structured use cases, the Bronze layer can also store raw JSON payloads to accommodate schema evolution and unpredictable data structures.
 
 ---
 
@@ -54,18 +58,18 @@ The Silver layer transforms raw data into a **clean and reliable dataset**.
 
 Key operations:
 
-- remove invalid records (e.g. negative fares, zero distance)
-- standardize timestamp fields
-- handle null values
-- derive new features
+- remove invalid records (e.g. negative fares, zero distance)  
+- standardize timestamp fields  
+- handle null values  
+- derive new features  
 
 Derived columns include:
 
-- `trip_duration_minutes`
-- `trip_speed_kmh`
-- `pickup_date`
+- `trip_duration_minutes`  
+- `trip_speed_kmh`  
+- `pickup_date`  
 
-Example table: main.silver.silver_taxi_trips
+Example table: `main.silver.silver_taxi_trips`
 
 ---
 
@@ -75,15 +79,15 @@ The Gold layer contains **aggregated, business-ready datasets** optimized for an
 
 Example tables:
 
-- `gold_monthly_revenue` → revenue trends over time
-- `gold_trip_distance_stats` → trip behavior analysis
-- `gold_tip_analysis` → tipping patterns by passenger count
+- `gold_monthly_revenue` → revenue trends over time  
+- `gold_trip_distance_stats` → trip behavior analysis  
+- `gold_tip_analysis` → tipping patterns by passenger count  
 
 These tables are designed for:
 
-- dashboarding
-- business insights
-- analytical queries
+- dashboarding  
+- business insights  
+- analytical queries  
 
 ---
 
@@ -98,11 +102,11 @@ NYC Taxi Dataset (External Source)
 
 ## Key Features
 
-- End-to-end **Medallion Architecture implementation**
-- Use of **Delta Lake** for ACID-compliant data storage
-- Separation of ingestion, transformation, and analytics layers
-- Handling of real-world data issues (invalid records, division by zero)
-- Modular and scalable project structure
+- End-to-end **Medallion Architecture implementation**  
+- Use of **Delta Lake** for ACID-compliant data storage  
+- Separation of ingestion, transformation, and analytics layers  
+- Handling of real-world data issues (invalid records, division by zero)  
+- Modular and scalable project structure  
 
 ---
 
@@ -110,20 +114,20 @@ NYC Taxi Dataset (External Source)
 
 The repository is organized into a modular and scalable structure:
 
-- `src/` → core data pipeline logic (Bronze, Silver, Gold, configuration)
-- `notebooks/` → Databricks entry points to execute pipelines
-- `sql/` → schema and volume setup scripts
-- `tests/` → (planned) unit and integration tests
+- `src/` → core data pipeline logic (Bronze, Silver, Gold, configuration)  
+- `notebooks/` → Databricks entry points to execute pipelines  
+- `sql/` → schema and volume setup scripts  
+- `tests/` → (planned) unit and integration tests  
 
 ---
 
 ## Technologies Used
 
-- Databricks
-- Apache Spark (PySpark)
-- Delta Lake
-- Python
-- Git / GitHub
+- Databricks  
+- Apache Spark (PySpark)  
+- Delta Lake  
+- Python  
+- Git / GitHub  
 
 ---
 
@@ -131,11 +135,11 @@ The repository is organized into a modular and scalable structure:
 
 Through this project, I explored:
 
-- Designing a **Lakehouse architecture** from scratch
-- Implementing **Medallion data modeling (Bronze/Silver/Gold)**
-- Using Delta Lake for reliable and scalable data storage
-- Handling platform-specific constraints (e.g. Unity Catalog, metadata columns)
-- Building modular and maintainable data pipelines
+- Designing a **Lakehouse architecture** from scratch  
+- Implementing **Medallion data modeling (Bronze/Silver/Gold)**  
+- Using Delta Lake for reliable and scalable data storage  
+- Handling platform-specific constraints (e.g. Unity Catalog, metadata columns)  
+- Building modular and maintainable data pipelines  
 
 ---
 
@@ -143,15 +147,16 @@ Through this project, I explored:
 
 Planned enhancements:
 
-- Incremental processing using Delta MERGE
-- Data quality validation layer
-- Unit and integration testing (pytest)
-- CI/CD pipeline integration
-- Workflow orchestration (e.g. scheduling pipelines)
-- Performance optimization (partitioning, OPTIMIZE, VACUUM)
-- Local-first development workflow to enable debugging and validation outside Databricks
-- Environment parity between local Spark and Databricks runtime (configs, dependencies, data access)
-- Decoupling pipeline logic from platform-specific utilities (e.g. dbutils)
+- Migrate data storage to external cloud storage (e.g. S3 / ADLS) for better scalability and production alignment  
+- Incremental processing using Delta MERGE  
+- Data quality validation layer  
+- Unit and integration testing (pytest)  
+- CI/CD pipeline integration  
+- Workflow orchestration (e.g. scheduling pipelines)  
+- Performance optimization (partitioning, OPTIMIZE, VACUUM)  
+- Local-first development workflow to enable debugging and validation outside Databricks  
+- Environment parity between local Spark and Databricks runtime (configs, dependencies, data access)  
+- Decoupling pipeline logic from platform-specific utilities (e.g. dbutils)  
 
 ---
 
