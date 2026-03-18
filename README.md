@@ -89,13 +89,10 @@ These tables are designed for:
 
 ## Data Flow
 
-Public Dataset (NYC Taxi)
-↓
-Bronze (Raw Delta Table)
-↓
-Silver (Cleaned & Enriched)
-↓
-Gold (Aggregated Analytics Tables)
+NYC Taxi Dataset (External Source)  
+→ Bronze Layer (Raw Ingestion - Delta)  
+→ Silver Layer (Cleaned & Standardized)  
+→ Gold Layer (Business Aggregations)
 
 ---
 
@@ -111,21 +108,12 @@ Gold (Aggregated Analytics Tables)
 
 ## Project Structure
 
-nyc-taxi-databricks-lakehouse
-│
-├── src
-│ ├── bronze # ingestion logic
-│ ├── silver # transformation logic
-│ ├── gold # aggregation logic
-│ └── config # centralized configuration
-│
-├── notebooks # pipeline execution (Databricks)
-│
-├── sql # schema and volume setup
-│
-├── tests # (planned) unit/integration tests
-│
-└── README.md
+The repository is organized into a modular and scalable structure:
+
+- `src/` → core data pipeline logic (Bronze, Silver, Gold, configuration)
+- `notebooks/` → Databricks entry points to execute pipelines
+- `sql/` → schema and volume setup scripts
+- `tests/` → (planned) unit and integration tests
 
 ---
 
