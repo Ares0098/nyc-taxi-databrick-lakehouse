@@ -2,7 +2,8 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import (
     col,
     avg,
-    count
+    count,
+    expr
 )
 
 from utils.config.constants import (
@@ -18,7 +19,7 @@ def run_pipeline():
 
     df = df.withColumn(
         "tip_percentage",
-        col("tip_amount") / col("fare_amount")
+        expr("try_divide(tip_amount, fare_amount)")
     )
 
     df_agg = (
