@@ -110,3 +110,63 @@ Gold (Aggregated Analytics Tables)
 ---
 
 ## Project Structure
+
+nyc-taxi-databricks-lakehouse
+│
+├── src
+│ ├── bronze # ingestion logic
+│ ├── silver # transformation logic
+│ ├── gold # aggregation logic
+│ └── config # centralized configuration
+│
+├── notebooks # pipeline execution (Databricks)
+│
+├── sql # schema and volume setup
+│
+├── tests # (planned) unit/integration tests
+│
+└── README.md
+
+---
+
+## Technologies Used
+
+- Databricks
+- Apache Spark (PySpark)
+- Delta Lake
+- Python
+- Git / GitHub
+
+---
+
+## Key Learnings
+
+Through this project, I explored:
+
+- Designing a **Lakehouse architecture** from scratch
+- Implementing **Medallion data modeling (Bronze/Silver/Gold)**
+- Using Delta Lake for reliable and scalable data storage
+- Handling platform-specific constraints (e.g. Unity Catalog, metadata columns)
+- Building modular and maintainable data pipelines
+
+---
+
+## Future Improvements
+
+Planned enhancements:
+
+- Incremental processing using Delta MERGE
+- Data quality validation layer
+- Unit and integration testing (pytest)
+- CI/CD pipeline integration
+- Workflow orchestration (e.g. scheduling pipelines)
+- Performance optimization (partitioning, OPTIMIZE, VACUUM)
+- Local-first development workflow to enable debugging and validation outside Databricks
+- Environment parity between local Spark and Databricks runtime (configs, dependencies, data access)
+- Decoupling pipeline logic from platform-specific utilities (e.g. dbutils)
+
+---
+
+## License
+
+This project is intended for educational and portfolio purposes.
