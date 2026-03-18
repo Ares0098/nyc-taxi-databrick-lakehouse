@@ -6,7 +6,7 @@ from pyspark.sql.functions import (
     round
 )
 
-from src.config.constants import (
+from utils.config.constants import (
     BRONZE_TABLE,
     SILVER_TABLE
 )

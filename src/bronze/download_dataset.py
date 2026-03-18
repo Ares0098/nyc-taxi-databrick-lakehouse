@@ -1,6 +1,6 @@
 import urllib.request
 
-from src.config.constants import (
+from utils.config.constants import (
     DATA_URL,
     VOLUME_DATA_PATH
 )
