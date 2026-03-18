@@ -6,7 +6,7 @@ from pyspark.sql.functions import (
     col
 )
 
-from utils.config.constants import (
+from src.config.constants import (
     BRONZE_TABLE,
     VOLUME_DATA_PATH,
     BRONZE_PARTITIONS

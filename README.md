@@ -2,37 +2,37 @@
 
 ## Overview
 
-This project demonstrates a modern **Lakehouse data pipeline** built using Databricks and Delta Lake with the public **NYC Taxi Trip dataset**.
+This project implements a modern **Lakehouse data pipeline** using Databricks and Delta Lake, based on the public **NYC Taxi Trip dataset**.
 
-The goal of this project is to simulate a realistic **data engineering workflow**:
+The objective is to simulate a realistic **end-to-end data engineering workflow**, transforming raw data into analytics-ready datasets using a structured, production-inspired approach.
 
-- ingest raw data into a Bronze layer
-- clean and standardize data in a Silver layer
-- build analytics-ready tables in a Gold layer
+The pipeline follows the **Medallion Architecture**, organizing data into progressive layers:
 
-The implementation follows the **Medallion Architecture**, which separates data processing into progressive layers of refinement.
+- **Bronze** → raw ingestion
+- **Silver** → cleaned and validated data
+- **Gold** → business-level aggregations
 
 ---
 
 ## Dataset
 
-This project uses the **NYC Taxi Trip Record Data**, a public dataset containing millions of taxi trips in New York City.
+This project uses the **NYC Taxi Trip Record Data**, a large-scale public dataset containing detailed records of taxi trips in New York City.
 
-Each record contains trip-level information such as:
+Each record includes:
 
 - pickup and dropoff timestamps
 - passenger count
 - trip distance
-- fare amount
-- pickup and dropoff locations
+- fare and tip amounts
+- location identifiers
 
-The dataset is widely used for benchmarking distributed data processing systems.
+This dataset is commonly used to benchmark distributed data processing and analytics workloads.
 
 ---
 
 ## Architecture
 
-The pipeline follows a **Lakehouse architecture** built on top of Delta Lake tables.
+The pipeline is built using a **Lakehouse architecture** with Delta Lake tables.
 
 ### Bronze Layer
 
@@ -40,103 +40,73 @@ The Bronze layer stores **raw ingested data** with minimal transformation.
 
 Responsibilities:
 
-- ingest raw parquet files
+- ingest raw Parquet data from external source
 - preserve original schema
-- add ingestion metadata if necessary
+- append ingestion metadata (e.g. ingestion timestamp, source file)
 
-Example table : bronze_taxi_trips
+Example table: main.bronze.bronze_taxi_trips
+
+---
 
 ### Silver Layer
 
-The Silver layer contains **cleaned and standardized data**.
+The Silver layer transforms raw data into a **clean and reliable dataset**.
 
-Typical transformations include:
+Key operations:
 
-- removing invalid or corrupt records
-- standardizing timestamp fields
-- handling null values
-- deriving useful columns
+- remove invalid records (e.g. negative fares, zero distance)
+- standardize timestamp fields
+- handle null values
+- derive new features
 
-Example derived fields:
+Derived columns include:
 
-- trip duration
-- trip hour
-- day of week
+- `trip_duration_minutes`
+- `trip_speed_kmh`
+- `pickup_date`
 
-Example table : silver_taxi_trips
+Example table: main.silver.silver_taxi_trips
+
+---
 
 ### Gold Layer
 
-The Gold layer contains **business-level aggregations and analytics tables**.
+The Gold layer contains **aggregated, business-ready datasets** optimized for analytics and reporting.
 
-Example outputs:
+Example tables:
 
-- daily trip statistics
-- revenue per location
-- hourly trip demand
+- `gold_monthly_revenue` → revenue trends over time
+- `gold_trip_distance_stats` → trip behavior analysis
+- `gold_tip_analysis` → tipping patterns by passenger count
 
-Example tables : gold_daily_trip_metrics, gold_location_revenue
-These tables are optimized for analytics queries and dashboarding.
+These tables are designed for:
+
+- dashboarding
+- business insights
+- analytical queries
+
+---
+
+## Data Flow
+
+Public Dataset (NYC Taxi)
+↓
+Bronze (Raw Delta Table)
+↓
+Silver (Cleaned & Enriched)
+↓
+Gold (Aggregated Analytics Tables)
+
+---
+
+## Key Features
+
+- End-to-end **Medallion Architecture implementation**
+- Use of **Delta Lake** for ACID-compliant data storage
+- Separation of ingestion, transformation, and analytics layers
+- Handling of real-world data issues (invalid records, division by zero)
+- Modular and scalable project structure
 
 ---
 
 ## Project Structure
-
-### src/
-
-Contains the main data pipeline logic.
-
-- **bronze** – raw data ingestion
-- **silver** – cleaning and transformation logic
-- **gold** – analytics and aggregations
-
-### notebooks/
-
-Contains orchestration notebooks used to execute pipelines inside Databricks.
-
-### tests/
-
-Reserved for unit tests of transformation logic.
-
----
-
-## Technologies Used
-
-This project uses the following technologies:
-
-- Databricks
-- Apache Spark
-- Delta Lake
-- Python / PySpark
-- Git + GitHub
-
----
-
-## Learning Objectives
-
-This project demonstrates several important data engineering concepts:
-
-- Lakehouse architecture
-- Medallion data modeling
-- Delta Lake table management
-- Distributed data processing with Spark
-- Data pipeline structuring
-- Version-controlled data engineering workflows
-
----
-
-## Future Improvements
-
-Possible extensions for this project include:
-
-- partition optimization for large tables
-- Delta table maintenance (OPTIMIZE / VACUUM)
-- automated pipeline orchestration
-- dashboarding and analytics layer
-- streaming ingestion pipeline
-
----
-
-## License
-
-This project is intended for educational and portfolio purposes.

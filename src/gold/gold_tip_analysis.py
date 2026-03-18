@@ -6,7 +6,7 @@ from pyspark.sql.functions import (
     expr
 )
 
-from utils.config.constants import (
+from src.config.constants import (
     SILVER_TABLE,
     GOLD_TIP_ANALYSIS_TABLE
 )

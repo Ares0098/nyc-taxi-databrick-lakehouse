@@ -8,7 +8,7 @@ from pyspark.sql.functions import (
     col
 )
 
-from utils.config.constants import (
+from src.config.constants import (
     SILVER_TABLE,
     GOLD_MONTHLY_REVENUE_TABLE
 )
